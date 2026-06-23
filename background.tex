@@ -1,2 +1,75 @@
 \chapter{Background}
 \label{chap:lit}
+\section{Turbulence}
+Turbulence is the chaotic and random movement of a fluid which can occur across all length scales and can present itself in the form of eddies. Naturally, turbulence is applied to coronal plasma and it’s MHD description.
+
+\subsection{Hydrodynamic Turbulence}
+Turbulence begins with the injection of kinetic energy \(\epsilon\) into the system, via external forcing, at some larger scale, the outer scale, resulting in the formation of eddies at the same scale. Over time, these eddies break apart locally, and form successively smaller eddies, transferring energy down length scales in a process called the energy cascade. The range of the length scales over which the cascade occurs is the inertial range and the cascade halts once a sufficiently small scale, known as the Kolmogorov scale, is reached. At this scale, viscosity and other dissipative effects become relevant and will dissipate the eddy energy into heat. Once the system has reached the steady state, the rate of dissipation is equal to the rate of energy injection. The rates are the same at the outer and the Kolmogorov scale and energy can only be transferred between adjacent scales, suggesting that the inertial range energy flux is \(\epsilon\) at all scales. No dissipation or build up of energy can occur at any scale in the inertial range.
+
+The specifics of the turbulence can be inferred from the Navier-Stokes fluid equation and dimensional analysis. The fluid advection term \(\boldsymbol{u}\cdot \nabla\boldsymbol{u}\) in the Navier Stokes equation is the only non-linear term and thus, drives turbulence. In addition, it governs the length of time required for an eddy to significantly distort through non-linear motion, known as the eddy decorrelation/turnover time \(\tau_l\) \textcolor{red}{SUGGESTS THAT CASCADE (TURNOVER) TIME AND NONLINEAR TIME MUST BE SAME- WHY}. This is the typical time scale for the energy in a length scale to transfer to ensuing one and can be written as 
+\begin{equation*}
+    \tau_l \sim \frac{l}{u_l} 
+\end{equation*}
+where \(l\) is the characteristic correlation length of an eddy and \(u_l\) is the structure function which is a measure of the average velocity difference between two points on a eddy. Similarly the injected kinetic energy (per unit mass) \(E\) can be obtained through dimensional analysis.
+\begin{equation*}
+   E \sim u_l^2 
+\end{equation*}
+Because all injected energy is transferred to each scale can we express the energy flux at scale \(l\) in terms of the kinetic energy  (per unit mass) \(E\) and the turnover time.
+\begin{equation*}
+    \epsilon \sim \frac{E}{\tau_l} \sim \frac{u_l^3}{l} 
+\end{equation*}
+The structure function can therefore be written as 
+\begin{equation}
+    u_l \sim (\epsilon \; l)^{\frac{1}{3}} 
+    \label{eq:Structure func}
+\end{equation}
+
+We can also define an energy spectrum \(E(k)\), the energy  (per unit mass) per unit wavenumber \(k \sim 1/l\), corresponding to the eddy scale \(l\).
+\begin{equation*}
+   E(k) \sim \frac{u_l^2}{k} \sim \epsilon^\frac{2}{3}k^{-\frac{5}{3}}
+\end{equation*}
+The energy (per unit mass) stored in eddies with wavenumber between \(k\) and \(k+dk\) given by \(E(k)dk\) and can be used a measurement of the energy cascade. Substituting the structure function \eqref{eq:Structure func} into the energy spectrum expression, we obtain the well known Kolmogorov's -5/3 power law. 
+\begin{equation}
+   E(k) \sim \epsilon^\frac{2}{3}k^{-\frac{5}{3}}
+   \label{eq:Kolmogorov law}
+\end{equation}
+\subsection{MHD/RMHD Turbulence}
+The principal difference between hydrodynamics and MHD, is the inclusion of the strong background magnetic field in MHD, which introduces anisotropy. The plasma in MHD has directionally dependent physical quantities, enabling the separation and isolation of behaviour along (\(\parallel\)) and across (\(\perp\)) the magnetic field. Anisotropy is further supported by RMHD. The RMHD equations reflect how the linear propagation of waves occurs in the parallel direction while the nonlinear energy cascade, encoded by the poisson brackets, is mainly perpendicular. Therefore, the perpendicular length scale of the eddy shortens quicker than the parallel length scale, flattening the eddy into a cigar shape  as the turbulence develops. Since the nonlinearities primarily occur in the perpendicular direction, the energy spectrum \eqref{eq:Kolmogorov law} can be written as
+\begin{equation}
+   E(k_{\perp}) \sim \epsilon^\frac{2}{3}k_{\perp}^{-\frac{5}{3}}.
+   \label{eq:Energy spectra perp}
+\end{equation}
+
+The scaling effect of anisotropy on turbulent structures and the energy cascade can be directly derived from principle of critical balance. Critical balance states that nonlinearities in the perpendicular plane are carried along the parallel direction by propagating waves thereby enforcing spatial coherence in this direction. The relationship between parallel correlation length \(k^{-1}_{\parallel}\) and perpendicular scale of the turbulent structure \(k^{-1}_{\perp}\) is determined by equating the time scales for the linear Alfv\'en wave propagation and for nonlinear interactions. 
+\begin{equation*}
+    \tau_A \sim\tau_{nl}
+\end{equation*}
+
+Expressing the linear propagation time as 
+\begin{equation*}
+    \tau_A \sim \frac{l_{\parallel}}{v_A} \sim \frac{1}{k_{\parallel}v_A} 
+\end{equation*}
+and the nonlinear time, otherwise known as the eddy turnover time,
+\textcolor{red}{Equal to the eddy turnover time, a biased review suggests this may not always be the case. Cascade/turnover time is equal to propagation time for critical balance}
+
+\begin{equation*}
+    \tau_{nl} \sim \frac{l_{\perp}}{u_l} \sim \frac{1}{k_{\perp}u_l} 
+\end{equation*}
+we obtain 
+\begin{equation*}
+    l_{\parallel} \sim \frac{v_A}{u_l}l_{\perp}
+\end{equation*}
+Substituting the Kolmogorv scaling \eqref{eq:Structure func}, we derive  the Goldreich-Sridhar anisotropic scaling 
+\begin{equation}
+    \ell_{\parallel} \propto \ell_{\perp}^{2/3}, \quad \text{or equivalently} \quad k_{\parallel} \propto k_{\perp}^{2/3}.
+    \label{eq:Goldreich Sridhar}
+\end{equation}
+
+\textcolor{red}{cascade time= nonlinear time  (Kolmogorov) to get perpendicular (non linearities predominantly perpendicular) and cascade time= propagation time for parallel, magnetic field influence only comes in parallel scaling, sets the value of the parallel length scale for the eddy for a given perpendicular length scale. Parallel eddy length scale is distance Alfv\'en pulse travels along the field over non linear time and takes perturbation of size perp eddy scale to break up non linearly- max distance which any pert. can remain correlated} 
+The anisotropic scaling conveys that the perpendicular correlation length scales of the eddy are always smaller than the parallel and this difference diverges as the eddy size reduces. We can substitute the Goldreich-Sridhar scaling into the energy spectra \(E(k_{\perp})\) \eqref{eq:Energy spectra perp}.
+\begin{equation*}
+   E(k_{\parallel}) \propto k_{\parallel}^{-2} 
+\end{equation*}
+This energy spectra \(E(k_{\parallel})\) represents the distribution of energies across the wavenumber \(k_{\parallel}\), set by the perpendicular wavenumber \(k_{\perp}\).
+
+Passive fields, fields advected by the turbulent motions by having no influence on the turbulence itself, have the same cascade/turnover time as the turbulence. If the passive field is a conserved quadratic invariant (energy conservation) and the energy flux is constant at each length scale, then we can construct a similar turbulence theory for the passive field which follow the scalings above. 
