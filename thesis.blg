@@ -2,8 +2,8 @@ This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
 A level-1 auxiliary file: intro.aux
-A level-1 auxiliary file: literature.aux
-A level-1 auxiliary file: new_ideas.aux
+A level-1 auxiliary file: background.aux
+A level-1 auxiliary file: methods.aux
 A level-1 auxiliary file: implementation.aux
 A level-1 auxiliary file: results.aux
 A level-1 auxiliary file: conclusion.aux
@@ -12,7 +12,7 @@ A level-1 auxiliary file: appendices.aux
 Database file #1: thesis.bib
 You've used 1 entry,
             2855 wiz_defined-function locations,
-            623 strings with 5033 characters,
+            623 strings with 5031 characters,
 and the built_in function-call counts, 489 in all, are:
 = -- 33
 > -- 26

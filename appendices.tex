@@ -12,6 +12,1064 @@
 %% in the program.  Alternatively, a chapter for each program, a
 %% section for each library and a subsection for each file.
 %%
+\chapter{Derivations}
+\section{Magnetohydrodynamics (MHD)}
+
+\subsection*{Ideal MHD Equations}
+The ideal MHD equations encode the conservation laws for a conducting, flowing fluid.
+The continuity equation represents mass conservation. It is derived by arguing that the mass in a volume of fluid is equivalent to the mass flux in and out of the same volume. 
+\begin{equation}
+    \label{eq:Continuity Eqn}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \boldsymbol{u}) = 0.
+\end{equation}
+
+Similarly, the MHD equation for momentum conservation is obtained by equating the momentum change within a volume with processes that transport momentum in and out of the volume. The momentum due to viscous stress is negligible.
+\begin{equation}
+     \rho \left( \frac{\partial }{\partial t} + \boldsymbol{u} \cdot \nabla \right) \boldsymbol{u}
+    = - \nabla p + \frac{(\nabla \times \boldsymbol{B}) \times \boldsymbol{B}}{4\pi}
+    = - \nabla \left[
+        \left( p + \frac{B^{2}}{8\pi} \right) \boldsymbol{I}
+         \right] + \frac{\boldsymbol{B}\cdot \nabla\boldsymbol{B}}{4\pi}.  
+    \label{eq:Momentum cons}
+\end{equation}
+The momentum conservation equation contains the MHD body force, which is obtained by combining Maxwell's equations of electromagnetism and the Lorentz force, limited to the non-relativistic case.
+
+\begin{equation*}
+    \boldsymbol{F} = \frac{(\nabla \times \boldsymbol{B}) \times \boldsymbol{B}}{4\pi}.
+\end{equation*}
+
+By substituting the Ampere-Maxwell law and Ohm's law into Faraday's law and assuming no magnetic diffusivity, we reach the ideal induction equation. This MHD equation implies that the fluid elements will remain on the same magnetic field line. It also represents the conservation of flux since the field lines are 'frozen into the flow'. Thus, changing the geometric properties of a fluid element can amplify magnetic fields in the fluid
+\begin{equation}
+    \label{eq:Induction eq} 
+    \frac{\partial \boldsymbol{B}}{\partial t}= \nabla \times (\boldsymbol{u} \times \boldsymbol{B})
+\end{equation}
+
+The adiabatic entropy equation for MHD is derived by applying the energy conservation law. The total energy inside a fluid element is composed of kinetic, internal and magnetic energies. The change in the total energy in a volume is equal to the energy transport processes and we have ignored negligible processes such as heat flux. 
+\begin{equation}
+    \left( \frac{\partial }{\partial t} + \boldsymbol{u} \cdot \nabla \right)s=0
+    \label{eq:Energy cons}
+\end{equation}
+The variable \(s\) represents entropy and is defined as \(s\equiv p/\rho^{\gamma}\).
+
+\section{MHD Waves}
+We can find solutions to the ideal MHD equations in the form of a background field and a perturbation. 
+\begin{equation*}
+    \rho= \rho_{0} + \delta \rho, \quad p= p_{0} + \delta p,  \quad  \boldsymbol{B}= B_{0}\hat{\boldsymbol{z}} + \delta \boldsymbol{B}, \quad \boldsymbol{u}= \boldsymbol{U} + \delta \boldsymbol{u} 
+\end{equation*}
+
+The background velocity field is aligned in the direction of the magnetic field and varies along the perpendicular direction, \(\boldsymbol{U}= U(x) \hat{\boldsymbol{z}}\), introducing a shear in the background velocity field. The perturbation in the velocity field is \(\delta \boldsymbol{u} = \partial\boldsymbol{\xi}/\partial t\), where we have introduced the fluid displacement field \(\boldsymbol{\xi}\).
+% This is the displacement field when we have taken the background displacement to be zero.
+
+By assuming the perturbations are infinitesimal we can consequently linearise the MHD equations.
+
+Expanding the continuity equation, then substituting the solution for the density field, the following equations are obtained.
+
+\begin{equation*}
+  \begin{split}
+       &\frac{\partial \rho}{\partial t} + \delta \boldsymbol{u}\cdot\nabla \rho
+       = - \rho \, \nabla \cdot \delta\boldsymbol{u}\\
+       &\frac{\partial }{\partial t}(\rho_0 + \delta \rho) + \frac{\partial \boldsymbol{\xi}}{\partial t} \cdot \nabla (\rho_0 +\delta \rho)
+       = - (\rho_0 +\delta \rho) \nabla \cdot  \frac{\partial\boldsymbol{\xi}}{\partial t}
+       % Nonlinear advection term removed first, then any other U disappears except for grad u which comes up in the induction equation
+       % Never mind, we are only interested in the fluid displacement relative to the background because a background shear doesn't generate waves 
+  \end{split}
+\end{equation*}
+We subsequently linearise the equation by ignoring the second order or higher perturbation terms and simplify. Note that the nonlinear fluid advection term \(\delta\boldsymbol{u} \cdot \boldsymbol\nabla\) is completely removed from the equation since it always produces a second order term.
+
+\begin{equation*}
+  \frac{\partial \delta \rho}{\partial t}
+       = - \rho_0 \boldsymbol{\nabla} \cdot \frac{\partial\boldsymbol{\xi}}{\partial t}
+\end{equation*}
+\begin{equation}
+    \frac{\delta \rho}{\rho_0}
+    = - \boldsymbol{\nabla}\cdot \boldsymbol{\xi}
+  \label{eq:Density pert}
+\end{equation}
+The physical interpretation of the equation above is that the contraction (negative divergence) of a fluid element increases its density.
+
+
+Ignoring the nonlinear fluid advection term, we can evaluate the energy equation using the quotient rule. 
+\begin{equation*}
+  \begin{split}
+       &\frac{\partial}{\partial t} \frac{p}{\rho^{\gamma}}
+       = 0\\
+       &\frac{\frac{\partial p }{\partial t} \rho^{\gamma}-\frac{p}{\rho} \gamma\rho^{\gamma-1}}{\rho^{2\gamma}}
+       = 0
+  \end{split}
+\end{equation*}
+
+Substituting the density and pressure fields and linearising, we obtain
+
+\begin{equation*}
+  \begin{split}
+    \frac{\partial (p_0 +\delta p)}{\partial t} = \frac{(p_0 +\delta p)}{(\rho_0 +\delta \rho)}&\gamma \frac{\partial (\rho_0 +\delta \rho)}{\partial t}\\
+    \frac{\partial }{\partial t}\frac{\delta p}{p_0} = \gamma \frac{\partial }{\partial t}&\frac{\delta \rho}{\rho_0}
+  \end{split}
+\end{equation*}
+\begin{equation}
+    \frac{\delta p}{p_0} = - \gamma \boldsymbol{\nabla}\cdot \boldsymbol{\xi} 
+    \label{eq:Pressure pert}
+\end{equation}
+
+where we have used the result from the linearised continuity equation \eqref{eq:Density pert} to simplify the equation.
+
+Substituting the perturbed solutions and removing the advection term in the induction equation leads to the following.
+
+\begin{equation*}
+ \begin{split}
+    &\left( \frac{\partial}{\partial t} + \delta \boldsymbol{u}\cdot\nabla \right)\boldsymbol{B}
+    = \boldsymbol{B}\cdot\nabla\delta\boldsymbol{u} - \boldsymbol{B}\nabla\cdot \delta\boldsymbol{u}\\
+    &\frac{\partial}{\partial t} (B_0 \hat{\boldsymbol{z}} +\delta \boldsymbol{B})
+    = (B_0\hat{\boldsymbol{z}} +\delta \boldsymbol{B})\cdot \nabla \frac{\partial\boldsymbol{\xi}}{\partial t} - (B_0\hat{\boldsymbol{z}} +\delta \boldsymbol{B})\nabla\cdot\frac{\partial\boldsymbol{\xi}}{\partial t} \\
+   \end{split}
+\end{equation*}
+
+After linearization, we can split the spatial derivative \(\nabla\) and fields into a parallel projection, \(\parallel\), in the direction of the background magnetic field \(\hat{\boldsymbol{z}}\) and a perpendicular projection, \(\perp\), in the x-y plane. Since the magnetic field lines are carried by the fluid flow, we note that the fluid displacement parallel to the magnetic field does not produce perturbations.
+
+\begin{equation*}
+ \begin{split}
+     &\frac{\partial\,\delta\boldsymbol{B}}{\partial t}
+    = B_{0}\nabla_{\parallel}\frac{\partial\boldsymbol{\xi}}{\partial t}
+      - \hat{\boldsymbol{z}} B_{0}\nabla\cdot\frac{\partial\boldsymbol{\xi}}{\partial t}\\
+    &\frac{\delta \boldsymbol{B}}{B_{0}}
+    = \nabla_{\parallel}\boldsymbol{\xi} - \hat{\boldsymbol{z}}\nabla\cdot\boldsymbol{\xi}\\
+    &\frac{\delta \boldsymbol{B}_{\perp}}{B_{0}}+\frac{\delta B_{\parallel}}{B_{0}} 
+    = \nabla_{\parallel}\boldsymbol{\xi}_{\perp}
+      - \hat{\boldsymbol{z}}\nabla_{\perp}\cdot\boldsymbol{\xi}_{\perp}\\
+  \end{split}
+\end{equation*}
+
+When we separate the magnetic field into its magnitude \(B\) and direction \(\boldsymbol{b}= \boldsymbol{B}/B\), we see that for the perturbation \(\delta \boldsymbol{B}\),  \(\delta \boldsymbol{b}\) must be perpendicular to \(\hat{\boldsymbol{z}}\) in order for a perpendicular perturbation to exist.
+\begin{equation*}
+    \frac{\delta \boldsymbol{B}}{B_{0}} = \frac{\delta (B \boldsymbol{b})}{B_{0}} = \delta \boldsymbol{b} + \hat{\boldsymbol{z}} \frac{\delta B}{B_{0}} .
+\end{equation*}
+
+Hence, the perpendicular and parallel perturbations of the magnetic represent perturbations in the direction and strength of the field and can be expressed in terms of the perpendicular displacement field.
+
+\begin{equation*}
+    \frac{\delta \boldsymbol{B}_{\perp}}{B_0} = \delta \boldsymbol{b}, \quad
+    \frac{\delta B_{\parallel}}{B_0} = \frac{\delta B}{B_0}.
+\end{equation*}
+
+\begin{equation}
+    \frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} = \nabla_{\parallel}\boldsymbol{\xi}_{\perp},
+    \qquad
+    \frac{\delta B_{\parallel}}{B_{0}} = -\,\nabla_{\perp}\cdot\boldsymbol{\xi}_{\perp}
+    \label{eq:Magnetic pert}
+\end{equation}
+
+Finally, we remove the nonlinear term in the momentum equation to obtain
+\begin{equation*}
+     \rho \frac{\partial }{\partial t} \delta\boldsymbol{u}
+    = - \nabla p - \nabla \frac{B^{2}}{8\pi}  + \frac{\boldsymbol{B}\cdot \nabla\boldsymbol{B}}{4\pi}.  
+\end{equation*}
+
+After linearisation, the left side of the equation becomes
+\begin{equation}
+     (\rho_0 + \delta \rho) \frac{\partial }{\partial t} \left( \frac{\partial \boldsymbol{\xi}}{\partial t} \right)
+    =  \rho_0\frac{\partial^2 \boldsymbol{\xi}}{\partial t^2}.
+    \label{eq:Wave left}
+\end{equation}
+
+The term \(\nabla p\) resolves into the form below after the substitution of the linearised energy equation \eqref{eq:Pressure pert}.
+\begin{equation}
+ \begin{split}
+    -\nabla(p_0+\delta p)
+    &=-\nabla\delta p\\
+    &= \gamma p_0\nabla(\nabla \cdot \boldsymbol{\xi})
+    \label{eq:Wave right 1}
+ \end{split}
+\end{equation}
+
+Linearising the last two terms in the momentum equation we get
+\begin{equation*}
+ \begin{split}
+     - \frac{1}{8\pi}\nabla (B_0 \hat{\boldsymbol{z}}+ \delta\boldsymbol{B})^2
+    &= - \frac{1}{8\pi}\nabla (2B_0\hat{\boldsymbol{z}}\cdot\delta\boldsymbol{B}) \\
+    & = -\frac{B_0^2}{4\pi}\nabla \frac{\delta B}{B_0}
+ \end{split}
+\end{equation*}
+
+and 
+
+\begin{equation*}
+ \begin{split}
+    \frac{1}{4\pi}(B_0\hat{\boldsymbol{z}}+\delta \boldsymbol{B})\cdot \nabla(B_0\hat{\boldsymbol{z}}+\delta \boldsymbol{B}) 
+    &= \frac{1}{4\pi}B_0\hat{\boldsymbol{z}}\cdot \nabla\delta \boldsymbol{B}\\
+    &= \frac{B_0^2}{4\pi}\nabla_{\parallel} \left(\delta \boldsymbol{b} +\frac{\delta B}{B_0}\hat{\boldsymbol{z}} \right)\\
+ \end{split}
+\end{equation*}
+
+Combining these two terms and substituting the magnetic field strength and direction perturbations \eqref{eq:Magnetic pert}, we get 
+
+\begin{equation}
+ \begin{split}
+     &-\frac{B_0^2}{4\pi}(\boldsymbol{\nabla_{\perp} }+ \hat{\boldsymbol{z}} \nabla_{\parallel}) \frac{\delta B}{B_0} + \frac{B_0^2}{4\pi}\nabla_{\parallel} \left(\delta \boldsymbol{b} +\frac{\delta B}{B_0}\hat{\boldsymbol{z}} \right)\\
+    &=  \frac{B_0^2}{4\pi} \left( -\boldsymbol{\nabla_{\perp} } \frac{\delta B}{B_0}+\nabla_{\parallel} \delta \boldsymbol{b} \right)\\
+    &= \frac{B_0^2}{4\pi}(\nabla_{\perp}\nabla_{\perp} \boldsymbol{\xi}_{\perp} + \nabla_{\parallel}^2\boldsymbol{\xi}_{\perp})
+    \label{eq:Wave right 2}
+ \end{split}
+\end{equation}
+
+Assembling the terms \eqref{eq:Wave left}, \eqref{eq:Wave right 1} and \eqref{eq:Wave right 2} and dividing by \(\rho_0\) results in 
+\begin{equation*}
+    \frac{\partial^{2} \boldsymbol{\xi}}{\partial t^{2}} = \frac{\gamma p_0}{\rho_0} \nabla \nabla \cdot \boldsymbol{\xi} + \frac{B_0^2}{4 \pi\rho_0} \left( \nabla_{\perp} \nabla_{\perp} \cdot \boldsymbol{\xi}_{\perp} +\nabla_{\parallel}^{2} \boldsymbol{\xi}_{\perp} \right).
+\end{equation*}
+
+Defining the speed of sound \(c_s\) and the Alfv\'en speed \(v_A\) to be 
+\begin{equation*}
+    c_s=\sqrt{\frac{\gamma p_0}{\rho_0}}, \quad 
+    v_A=\frac{B_0}{\sqrt{4 \pi\rho_0}}
+\end{equation*}
+the equation becomes
+\begin{equation}
+    \frac{\partial^{2} \boldsymbol{\xi}}{\partial t^{2}} = c_{\mathrm{s}}^{2} \nabla \nabla \cdot \boldsymbol{\xi} + v_{\mathrm{A}}^{2} \left( \nabla_{\perp} \nabla_{\perp} \cdot \boldsymbol{\xi}_{\perp} +\nabla_{\parallel}^{2} \boldsymbol{\xi}_{\perp} \right).
+    \label{eq:Wave eqn}
+\end{equation}
+
+Substituting wave solutions \(\boldsymbol{\xi} \propto\) exp\(( -i\omega t + i\boldsymbol{k}\cdot \boldsymbol{r)}\) into the equation above
+
+\begin{equation}
+     \omega ^2\boldsymbol{\xi} = c_{\mathrm{s}}^{2} \boldsymbol{k} \boldsymbol{k} \cdot \boldsymbol{\xi} + v_{\mathrm{A}}^{2} \left( \boldsymbol{k}_{\perp} \boldsymbol{k}_{\perp} \cdot \boldsymbol{\xi}_{\perp} +k_{\parallel}^{2} \boldsymbol{\xi}_{\perp} \right).
+    \label{eq:Dispersion relation}
+\end{equation}
+where we have defined the wavevector \(\boldsymbol{k}=(k_{\perp}, 0, k_{\parallel})\).
+
+Splitting the displacement field into components, we have
+\begin{equation}
+    \omega^{2}\xi_{x} = c_{s}^{2}k_{\perp}\bigl(k_{\perp}\xi_{x} + k_{\parallel}\xi_{\parallel}\bigr) + v_{A}^{2}k^{2}\xi_{x}
+    \label{eq:Dispersion x}
+\end{equation}
+\begin{equation}
+    \omega^{2}\xi_{y} = v_{A}^{2}k_{\parallel}^{2}\xi_{y}
+    \label{eq:Dispersion y}
+\end{equation}
+\begin{equation}
+    \omega^{2}\xi_{\parallel} = c_{s}^{2}k_{\parallel}\bigl(k_{\perp}\xi_{x} + k_{\parallel}\xi_{\parallel}\bigr)
+    \label{eq:Dispersion z}
+\end{equation}
+        
+
+The perturbations of the rest of the fields are found by substituting the wave solution into \eqref{eq:Density pert}, \eqref{eq:Pressure pert} and \eqref{eq:Magnetic pert}.
+\begin{equation}
+    \begin{aligned}
+     \frac{\delta\rho}{\rho_{0}} &= -i\boldsymbol{k}\cdot\boldsymbol{\xi} = -i\bigl(k_{\perp}\xi_{x} + k_{\parallel}\xi_{\parallel}\bigr), \\
+        \frac{\delta p}{p_{0}} &= \gamma\,\frac{\delta\rho}{\rho_{0}}, \\
+        \delta\boldsymbol{b} &= i k_{\parallel}\boldsymbol{\xi}_{\perp} = i k_{\parallel}
+        \begin{pmatrix}
+            \xi_{x} \\
+            \xi_{y} \\
+            0
+        \end{pmatrix}, \\
+        \frac{\delta B}{B_{0}} &= -i k_{\perp}\xi_{x}.
+    \label{eq:perturbations of fields} 
+    \end{aligned}
+\end{equation}
+
+\section{Derivation of Alfv\'en Waves}
+We notice that equation \eqref{eq:Dispersion y} is in the form of an eigenvector equation with eigenvector \(\boldsymbol{\xi}=(0,\xi_y,0)\) and eigenvalues,
+\begin{equation*}
+    \omega=\pm k_{\parallel}v_A
+\end{equation*}
+
+These represent Alfv\'en waves that propagate parallel and antiparallel to \(k_{\parallel}\) or in the \(\hat{\boldsymbol{z}}\) direction. The value of \(\boldsymbol{k_{\perp}}\) can be non zero, and it causes the wave profile to shift perpendicular to the propagation direction but does not affect the propagation itself.
+
+Examining the perturbations of the fields that involve displacement in the y direction  
+\begin{equation*}
+    \boldsymbol{\xi}= \xi_y \hat{\boldsymbol{y}}, \qquad \delta\rho=0 \qquad \delta p=0, \qquad \delta B=0, \qquad \delta\boldsymbol{b}= ik_{\parallel} \xi_y \hat{\boldsymbol{y}}
+\end{equation*}
+we see that the curvature force of field lines is the only source of waves. Hence Alfv\'en waves behave similarly to waves on a string, where the strings are magnetic field lines. No compression of the fluid occurs.
+
+\section{Derivation of Magnetosonic Waves}
+Magnetosonic waves involve both sound and Alfv\'en speeds, therefore the equations for the \(x\) and \(z\) components of the displacement field represent magnetosonic waves. We can rewrite \eqref{eq:Dispersion x} and \eqref{eq:Dispersion z} as an eigenvector equation with the corresponding displacement field components as the eigenvector.
+\begin{equation*}
+    \omega^{2}
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        c_{s}^{2} k_{\perp}^{2} + v_{A}^{2} k^{2} & c_{s}^{2} k_{\parallel} k_{\perp} \\
+        c_{s}^{2} k_{\parallel} k_{\perp} & c_{s}^{2} k_{\parallel}^{2}
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}
+\end{equation*}
+
+We can find the dispersion relation by utilising the fact that the eigenvector equation must satisfy the characteristic equation \(det(A-\omega^2I)=0\), where \(A\) is the matrix and \(I\) is the identity matrix. 
+% \begin{equation} 
+% \begin{split}
+%     det 
+%     &\begin{pmatrix}
+%         c_{s}^{2} k_{\perp}^{2} + v_{A}^{2} k^{2}-\omega^{2} & c_{s}^{2} k_{\parallel} k_{\perp} \\
+%         c_{s}^{2} k_{\parallel} k_{\perp} & c_{s}^{2} k_{\parallel}^{2}-\omega^{2}
+%     \end{pmatrix} =0\\
+%     &= (c_{s}^{2} k_{\perp}^{2} + v_{A}^{2} k^{2}-\omega^{2})(c_{s}^{2} k_{\parallel}^{2}-\omega^{2})- (c_{s}^{2} k_{\parallel} k_{\perp})^2
+% \end{split}
+%     \label{eq:placeholder_label}
+% \end{equation}
+
+\begin{equation*}
+    \omega^{4} - k^{2}\left(c_{s}^{2} + v_{A}^{2}\right)\omega^{2} + c_{s}^{2}v_{A}^{2}k^{2}k_{\parallel}^{2} = 0
+\end{equation*}
+
+We can solve the dispersion relation using the quadratic formula to obtain
+\begin{equation}
+    \omega^{2} = \frac{1}{2} k^{2} \left[ c_{s}^{2} + v_{A}^{2} \pm \sqrt{\left( c_{s}^{2} + v_{A}^{2} \right)^{2} - 4 c_{s}^{2} v_{A}^{2} \cos^{2}\theta} \right]
+    \label{eq:Dispersion Magnetosonic}
+\end{equation}
+where we have used the substitution \( \cos\theta = k_{\parallel}/k.\) Fast magnetosonic waves are the high frequency solutions, whereas slow magnetosonic waves have a lower frequency. In the above expression, the upper sign represents the fast magnetosonic frequencies. 
+
+Plasma beta \(\beta\), defined as the thermal and magnetic energy ratio, also represents the relative importance of the Alfv\'en and sound speeds in physical system for magnetosonic waves.
+\begin{equation*}
+    \beta = \frac{p_0}{B_0^2/8\pi}=\frac{2}{\gamma}\frac{c_s^2}{v_A^2}
+\end{equation*}
+
+Due to the complexity of the dispersion relation, analysing specific limiting cases are easier to undertake.
+\subsection{Parallel Propagation: \(k_{\perp}=0\)}
+For parallel propagation, \(k_{\perp}=0\) so the eigenvalue equation becomes
+\begin{equation*}
+    \omega^{2}
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        v_{A}^{2} k_{\parallel}^{2} & 0 \\
+       0 & c_{s}^{2} k_{\parallel}^{2}
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}.
+\end{equation*}
+Since the matrix is diagonal, we observe that there are two orthogonal eigenvectors
+
+For the eigenvector \((\xi_x,0,0 )\), the corresponding eigenvalue is 
+\begin{equation*}
+    \omega=\pm k_{\parallel}v_A.
+\end{equation*}
+This represents an Alfv\'en wave with displacements in the \(x\) direction, which is physically identical to the Alfv\'en waves produced from displacements in the \(y\) direction.
+
+The curvature force is the only source for Alfv\'en waves, as expected.
+\begin{equation*}
+    \boldsymbol{\xi}= \xi_x \hat{\boldsymbol{x}}, \qquad \delta\rho=0 \qquad \delta p=0, \qquad \delta B=0, \qquad \delta\boldsymbol{b}= ik_{\parallel} \xi_x \hat{\boldsymbol{x}}
+\end{equation*}
+
+The eigenvalue for eigenvector \((0,0, \xi_{\parallel} )\) is 
+\begin{equation*}
+    \omega=\pm k_{\parallel}c_s,
+\end{equation*}
+which represents a sound wave with compressions and rarefactions in the fluid only.
+
+No perturbation of the magnetic field in the parallel propagation direction can occur since this perturbation only translates the magnetic field lines.
+\begin{equation*}
+    \boldsymbol{\xi}= \xi_{\parallel} \hat{\boldsymbol{z}}, \qquad \frac{\delta\rho}{\rho_0}=-ik_{\parallel}\xi_{\parallel} \qquad \frac{\delta p}{p_0}=\gamma \frac{\delta\rho}{\rho_0}, \qquad \delta B=0, \qquad \delta\boldsymbol{b}= 0
+\end{equation*}
+
+In a high \(\beta\) regime, the sound wave is the fast wave and the Alfv\'en is the slow, since thermal energy dominates over magnetic energy. The opposite occurs in the low \(\beta\) regime
+
+\subsection{Perpendicular Propagation: \(k_{\parallel}=0\)}
+When \(k_{\parallel}=0\), the eigenvector equation is 
+
+\begin{equation*}
+    \omega^{2}
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+       ( c_{s}^{2} + v_{A}^{2}) k_{\perp}^{2} & 0 \\
+       0 & 0
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+        \xi_{x} \\
+        \xi_{\parallel}
+    \end{pmatrix}
+    \label{eq:placeholder_label}
+\end{equation*}
+
+The eigenvector is \((\xi_x,0,0 )\), corresponding eigenvalue given by the diagonal entry of the matrix.
+\begin{equation}
+    \omega =\pm k_{\perp}\sqrt{c_s^2 +v_A^2}
+    \label{eq:Magento perp}
+\end{equation}
+The dispersion relation for the magnetosonic wave represents a sound wave that travels at a combination of Alfv\'en and sound speeds. Hence, both magnetic and thermal pressures are sources for the fast (and only) magnetosonic wave. The perpendicular propagation enables the perturbation of the fluid density and and the magnetic field strength. 
+
+\begin{equation*}
+    \boldsymbol{\xi}= \xi_{x} \hat{\boldsymbol{x}}, \qquad \frac{\delta\rho}{\rho_0}=-ik_{\perp}\xi_{x} \qquad \frac{\delta p}{p_0}=\gamma \frac{\delta\rho}{\rho_0}, \qquad \frac{\delta B}{B_0}=-ik_{\perp}\xi_x, \qquad \delta\boldsymbol{b}= 0
+\end{equation*}
+
+\subsection{Anisotropic Perturbations \(k_{\parallel} \ll k_{\perp}\)}
+The anisotropic regime \(k_{\parallel} \ll k_{\perp}\) is an important case to examine because structures in plasmas are highly elongated in the direction of the strong magnetic field \((l_{\perp} \sim 1/k_{\perp})\). However, unlike the \(k_{\parallel}\) regime, perpendicular structures, corresponding to \(l_{\parallel} \sim 1/k_{\parallel}\), are still present.
+
+We begin by first factorising \((c_s^2+v_A^2)\) from the magnetosonic dispersion relation \eqref{eq:Dispersion Magnetosonic}. We then apply the anisotropic limit to the equation by Taylor expanding the square root to first order since the second term in the square root is very small.
+
+\begin{equation*}
+    \begin{split}
+    \omega^{2} &= \frac{1}{2} k^{2} \left( c_{s}^{2} + v_{A}^{2} \right)
+    \left[ 1 \pm \sqrt{1 - \frac{4 c_{s}^{2} v_{A}^{2}}{\left( c_{s}^{2} + v_{A}^{2} \right)^{2}} \frac{k_{\parallel}^{2}}{k^{2}}} \right]\\
+    &\approx \frac{1}{2} k^{2} \left( c_{s}^{2} + v_{A}^{2} \right)
+    \left[ 1 \pm 1 \mp \frac{2 c_{s}^{2} v_{A}^{2}}{\left( c_{s}^{2} + v_{A}^{2} \right)^{2}} \frac{k_{\parallel}^{2}}{k^{2}} \right] 
+    \end{split}
+\end{equation*}
+
+We obtain the same dispersion relation as the fast wave \eqref{eq:Magento perp} for perpendicular propagation for the upper sign.
+\begin{equation*}
+    \omega =\pm k_{\perp}\sqrt{c_s^2 +v_A^2}
+\end{equation*}
+
+The slow magnetosonic wave is given by the lower sign. 
+\begin{equation}
+    \omega =\pm k_{\parallel}\frac{c_s v_A}{\sqrt{c_s^2 +v_A^2}}
+    \label{eq:Slow wave speed}
+\end{equation}
+
+We can determine the relative importance of the perpendicular and parallel displacements by rearranging equation \eqref{eq:Dispersion z} and substituting the slow wave dispersion relation 
+
+\begin{equation*}
+    \begin{split}
+        &(\omega^{2}- c_{s}^{2}k_{\parallel}^2)\xi_{\parallel} = c_{s}^{2}k_{\parallel}k_{\perp}\xi_{x}\\
+        &\left(\frac{k_{\parallel}^2c_s^2v_A^2}{c_s^2+v_A^2}-c_s^2k_{\parallel}^2\right)\xi_{\parallel}= c_s^2k_{\parallel}k_{\perp}\xi_{x}\\
+        &-\frac{k_{\parallel}c_s^2}{c_s^2+v_A^2}\xi_{\parallel}= k_{\perp}\xi_x\\
+    \end{split}
+\end{equation*}
+We see that the \(x\) displacement is very small compared to parallel displacements in the anisotropic regime.
+\begin{equation*}
+    \frac{\xi_x}{\xi_{\parallel}} = - \frac{k_{\parallel}}{k_{\perp}} \frac{c_s^2}{c_s^2 + v_A^2} \ll 1
+\end{equation*}
+
+Substituting the result above into the field perturbation equations \eqref{eq:perturbations of fields} yields
+\begin{equation*}
+    \begin{split}
+        \frac{\delta \rho}{\rho_0}
+&= - i \left( k_\perp \xi_x + k_\parallel \xi_\parallel \right)
+= - i \,\frac{v_A^2}{c_s^2 + v_A^2}\, k_\parallel \xi_\parallel , \\[6pt]
+%
+\frac{\delta p}{p_0}
+&= \gamma \,\frac{\delta \rho}{\rho_0} , \\[6pt]
+%
+\delta \boldsymbol{b}
+&= i k_\parallel \xi_x \,\hat{\boldsymbol{x}}
+= - i \,\frac{k_\parallel}{k_\perp}\,
+\frac{c_s^2}{c_s^2 + v_A^2}\,
+k_\parallel \xi_\parallel \,\hat{\boldsymbol{x}}
+\;\to\; 0 , \\[6pt]
+%
+\frac{\delta B}{B_0}
+&= - i k_\perp \xi_x
+= i \,\frac{c_s^2}{c_s^2 + v_A^2}\, k_\parallel \xi_\parallel .
+    \end{split}
+\end{equation*}
+
+No perturbation on the magnetic field direction occurs to the lowest order of \(k_{\parallel}/k_{\perp}\), hence the slow waves are sound waves/ The slow waves are pressure balance which means the compressions and rarefactions in the fluid out of phase with those in the field and the net pressure perturbation is zero.
+
+\begin{equation*}
+    \delta \!\left( p + \frac{B^2}{8\pi} \right) = p_0 \,\frac{\delta p}{p_0} + \frac{B_0^2}{4\pi}\,\frac{\delta B}{B_0} = \rho_0 \left( c_s^2 \,\frac{\delta p}{p_0} + v_A^2 \,\frac{\delta B}{B_0} \right)= 0.
+\end{equation*}
+
+In the anisotropic limit, Alfv\'en waves can propagate since \(k_{\parallel} \neq0\) and behave independently to \(k_{\perp}\). 
+
+
+\section{RMHD in Straight Field with Perpendicular Shear}
+\subsection{Ordering and Potentials}
+Reduced MHD simplifies the MHD model by removing negligible or fast varying components leaving only the slow varying and interesting dynamics such as turbulence. To remove such components, we scaled and ordered terms on the basis of properties of the plasma and the dynamics we aim to study in our system. We assume that fields and motions are subsonic to eliminate fast motions which present itself as fast waves. Because perpendicular scales are much smaller than parallel scales in plasma, we adopt anisotropic ordering. We also continue to work in a regime where the perturbations of the fields are small compared to the background. 
+
+Since we have examined only the linear dynamics in the previous section about waves, our intention is to now examine a system where the non linear and linear dynamics are equally important. This is carried out by ordering the linear and nonlinear timescales to be on the same order. In the MHD equations, the nonlinearities are presented through the advection term \(\boldsymbol{u}\cdot \nabla\). Thus, the rate of nonlinear interaction is \(\sim ku\) and is ordered to be comparable to the frequency of Alfv\'en waves and slow waves. 
+
+A summary of all the ordering we will be using is given below.
+\begin{equation*}
+    \epsilon \sim \frac{\delta u_{\perp}}{c_s} \sim \frac{\delta u_{\parallel}}{c_s} \sim \lvert \delta \boldsymbol{b} \rvert \sim \frac{\delta B}{B_0} \sim \frac{\delta \rho}{\rho_0} \sim \frac{\delta p}{p_0} \sim \frac{\omega}{k_{\perp} c_s} \sim \frac{k_{\parallel}}{k_{\perp}} \ll 1
+\end{equation*}
+
+We can apply our ordering regime to find useful reformulations of particular fields in terms of potentials. Dividing the continuity equation \eqref{eq:Continuity Eqn} by the background density \(\rho_{0}\), we obtain the expanded equation
+
+\begin{equation*}
+    \left(\frac{\partial }{\partial t} + \boldsymbol{U} \cdot \nabla + \delta \boldsymbol{u}_{\perp} \cdot \nabla + \delta u_{\parallel} \hat{\boldsymbol{z}}  \cdot \nabla \right) \frac{\delta \rho}{\rho_{0}}= - \left (1 + \frac{\delta \rho}{\rho_{0}}\right)\left(\nabla \cdot \delta \boldsymbol{u}_{\perp} + \hat{\boldsymbol{z}} \cdot \nabla \delta u_{\parallel}\right)
+\end{equation*}
+
+By ordering the terms, we find that the perpendicular velocity field is 2D incompressible at first order.
+\textcolor{red}{Give example of ordering: \(\delta \boldsymbol{u}_{\perp} \cdot \nabla \sim \delta \boldsymbol{u}_{\perp} \boldsymbol{k_{\perp}}, \nabla \cdot \delta \boldsymbol{u}_{\perp} \sim  \boldsymbol{k_{\perp}}  \delta \boldsymbol{u}_{\perp} \), \(\delta \rho / \rho_{0}\) are the zeroth order terms,  \(\partial / \partial t\), \(\boldsymbol{U} \cdot \nabla= U\nabla_{\parallel}\sim U k_{\parallel}, \) are terms  is first order in \(\epsilon\) and \(\delta u_{\parallel} \hat{\boldsymbol{z}}  \cdot \nabla \sim \delta u_{\parallel} \nabla_{\parallel}  \sim \delta u_{\parallel} k_{\parallel}, \hat{\boldsymbol{z}} \cdot \nabla \delta u_{\parallel} \sim  \nabla_{\parallel} \delta u_{\parallel}  \sim   k_{\parallel} \delta u_{\parallel}\) are second order terms in the equation, thus continuity equation at first order is the following when we expand the equation}
+
+\begin{equation}
+    \mathcal{O}(\epsilon): \nabla \cdot \delta \boldsymbol{u}_{\perp} = 0
+    \label{eq:incomp u}
+\end{equation}
+Consequently, we can write \(\delta\boldsymbol{u}_{\perp}\) in terms of a stream function \(\Phi\)
+\begin{equation}
+    \delta\boldsymbol{u}_{\perp}= \hat{\boldsymbol{z}} \times \boldsymbol{\nabla_{\perp}}\Phi
+    \label{eq:Stream}
+\end{equation}
+
+At second order, we have 
+\begin{equation}
+    \mathcal{O}(\epsilon^2): (\nabla \cdot \delta \boldsymbol{u})_{2} = - \left(\frac{\partial }{\partial t} + \boldsymbol{U} \cdot \nabla + \delta \boldsymbol{u}_{\perp} \cdot \nabla \right) \frac{\delta \rho}{\rho_{0}}= -\frac{\mathrm{d}}{\mathrm{d}t} \frac{\delta \rho}{\rho_{0}}
+    \label{Continuity 2 order}
+\end{equation}
+where we have defined, to lowest order, 
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t} \equiv \frac{\partial}{\partial t} + \boldsymbol{U} \cdot \nabla + \delta \boldsymbol{u}_{\perp} \cdot \nabla
+\end{equation*}
+
+Expanding the equation Maxwell's equation yields
+\begin{equation*}
+     \nabla \cdot \boldsymbol{B}= \nabla \cdot \delta \boldsymbol{B}_{\perp} + \hat{\boldsymbol{z}} \cdot\nabla \delta B_{\parallel} = 0
+\end{equation*}
+
+At lowest order, we obtain
+\begin{equation}
+    \mathcal{O}(\epsilon): \nabla \cdot \delta \boldsymbol{B}_{\perp} = 0
+    \label{eq:Incomp b}
+\end{equation}
+which suggests that we can express \(\delta \boldsymbol{B}_{\perp}\) in terms of the flux function \(\Psi\). Physically \(\Phi\) is the velocity vector potential and represents streamlines whereas \(\Psi\) is the magnetic vector potential and represent magnetic flux lines.
+
+\begin{equation}
+    \frac{\delta\boldsymbol{B}_{\perp}}{\sqrt{4\pi \rho_{0}}}= \hat{\boldsymbol{z}} \times \boldsymbol{\nabla_{\perp}}\Psi
+    \label{eq:Flux}
+\end{equation}
+
+Below are identities which will be used in the following sections. They have been defined up to first order. 
+\begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d}t} \equiv \frac{\partial}{\partial t} + \boldsymbol{U} \cdot \nabla + \delta \boldsymbol{u}_{\perp} \cdot \nabla
+    \label{eq:Convective der}
+\end{equation}
+\begin{equation}
+    \hat{\boldsymbol{b}}_{T} \cdot \nabla \equiv \hat{\boldsymbol{z}} \cdot \nabla + \frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot \nabla
+    \label{eq:B field advection}
+\end{equation}
+\begin{equation}
+     \boldsymbol{\mathcal{K}^{\perp}_{U}} \equiv \boldsymbol{\nabla_{\perp}} \ln(U) \equiv \frac{\boldsymbol{\nabla_{\perp}}U}{U} % CHECK THIS LATER
+     \label{eq:Scale shear}
+\end{equation}
+Identities \eqref{eq:Convective der} and \eqref{eq:B field advection} are the convection derivative and the advection by magnetic fields respectively. \eqref{eq:Scale shear} represents the scale of the background velocity shear compared to the background velocity.
+
+We now determine the Alfv\'enic and compressive perturbations that produce Alfv\'en waves and slow waves, respectively, and briefly examine the often forgotten entropy mode.
+
+\subsection{Alfv\'enic Perturbations}
+We now derive the evolution of perturbations perpendicular to the field from the induction and momentum equations only to second order.
+When we divide the induction equation \eqref{eq:Induction eq} by the background magnetic field \(B_{0}\), we obtain the following.
+
+\begin{equation*}
+ \begin{split}
+     &\frac{\partial \boldsymbol{B}}{\partial t}= -\boldsymbol{u} \cdot \nabla\boldsymbol{B} + \boldsymbol{B} \cdot \nabla\boldsymbol{u}- \boldsymbol{B}\nabla \cdot \boldsymbol{u} + \boldsymbol{u} \nabla \cdot \boldsymbol{B}\\
+     &\left(\frac{\partial}{\partial t} + \boldsymbol{u} \cdot \nabla\right)\frac{\boldsymbol{B}}{B_0} = \frac{\boldsymbol{B}}{B_0} \cdot \nabla\boldsymbol{u}- \frac{\boldsymbol{B}}{B_0}\nabla \cdot \boldsymbol{u} \\
+     &\frac{\mathrm{d}}{\mathrm{d}t}\frac{\delta \boldsymbol{B}}{B_0} = \boldsymbol{b} \cdot \nabla \boldsymbol{u}- \boldsymbol{b}\nabla \cdot \delta \boldsymbol{u} \\
+ \end{split}
+\end{equation*}
+
+
+We approximate \(\boldsymbol{b} \approx \hat{\boldsymbol{z}}\) in the last term since the background field dominates over the perturbations. 
+
+\begin{equation}
+     \frac{\mathrm{d}}{\mathrm{d}t}\frac{\delta \boldsymbol{B}}{B_0}= \boldsymbol{b} \cdot \nabla \boldsymbol{u} - \boldsymbol{\hat{\boldsymbol{z}}}\,\nabla \cdot \delta\boldsymbol{u}
+     \label{eq:Induction sim}
+\end{equation}
+
+We subsequently project the equation on the perpendicular plane and find to second order the following.
+\begin{equation}
+     \frac{\mathrm{d}}{\mathrm{d}t}\frac{\delta \boldsymbol{B}_{\perp}}{B_0}=  \hat{\boldsymbol{b}}_{T}  \cdot \nabla \delta\boldsymbol{u}_{\perp} 
+     \label{eq:Induction eqn perp}
+\end{equation}
+
+To write the equation in terms of the stream and flux function, we recognise that the convective derivative of any function \(f\) can be represented, to leading leading order, by the following by substituting the stream function \eqref{eq:Stream}.
+\begin{equation}
+    \begin{split}
+    \frac{\mathrm{d} f}{\mathrm{d}t}
+    &= \frac{\partial f}{\partial t}
+    + \delta\boldsymbol{u}_{\perp} \cdot \nabla_{\perp} f + \boldsymbol{U}\cdot \nabla f\\
+    &= \frac{\partial f}{\partial t}
+    + \hat{\boldsymbol{z}} \cdot \left( \nabla_{\perp} \Phi \times \nabla_{\perp} f \right)  + \boldsymbol{U}\cdot \nabla f\\
+    &= \frac{\partial f}{\partial t} + \{\Phi, f\} + \boldsymbol{U}\cdot \nabla f
+    \label{eq:Convective derivative f}
+    \end{split}
+\end{equation}
+The poisson bracket is defined as
+\begin{equation*}
+    \{\Phi,f\}= \frac{\partial \Phi}{\partial x}\frac{\partial f}{\partial y}-\frac{\partial \Phi}{\partial y}\frac{\partial f}{\partial x}
+\end{equation*}
+
+Substituting the flux function \eqref{eq:Flux} into the expression for advection of any function \(f\), by the magnetic field, yields a similar equation.
+\begin{equation}
+    \begin{split}
+    \hat{\boldsymbol{b}_T} \cdot \nabla f 
+    &= \frac{\partial f}{\partial z} + \delta \boldsymbol{b} \cdot \nabla_{\perp} f\\
+    &= \frac{\partial f}{\partial z} + \frac{1}{v_{\mathrm{A}}} \, \hat{\boldsymbol{z}} \cdot \left( \nabla_{\perp} \Psi \times \nabla_{\perp} f \right) \\
+    &= \frac{\partial f}{\partial z} + \frac{1}{v_{\mathrm{A}}} \, \{\Psi, f\}
+    \label{eq:B advection f}
+    \end{split}
+\end{equation}
+
+Coming back to the perpendicular induction equation \eqref{eq:Induction eqn perp}, we rewrite \(B_0\) in terms of the Alfv\'en speed, then substitute the flux function on the LHS of the equation. On the RHS, we substitute the stream function.
+\begin{equation*}
+ \begin{split}
+      &\frac{\mathrm{d}}{\mathrm{d}t} \frac{1}{v_A}\frac{\delta \boldsymbol{B}_{\perp}}{\sqrt{4 \pi\rho_0}}=  \hat{\boldsymbol{b}}_{T}  \cdot \nabla \delta\boldsymbol{u}_{\perp} \\ 
+      &\frac{1}{v_A} \frac{\mathrm{d}}{\mathrm{d}t} (\hat{\boldsymbol{z}} \times \nabla_{\perp} \Psi) =  \hat{\boldsymbol{b}}_{T}  \cdot \nabla (\hat{\boldsymbol{z}} \times \nabla_{\perp} \Phi) \\ 
+ \end{split}
+\end{equation*}
+
+
+Using \eqref{eq:Convective derivative f} and \eqref{eq:B advection f} and multiplying by \(v_A\) yields
+\begin{equation*}
+ \begin{split}
+      &\frac{\partial}{\partial t} (\hat{\boldsymbol{z}} \times \nabla_{\perp} \Psi) + \{\Phi, \hat{\boldsymbol{z}} \times \nabla_{\perp} \Psi\} + \boldsymbol{U}\cdot \nabla (\hat{\boldsymbol{z}} \times \nabla_{\perp} \Psi) =  \{\Psi, \hat{\boldsymbol{z}} \times \nabla_{\perp} \Phi\} + v_A\frac{\partial}{\partial z} (\hat{\boldsymbol{z}} \times \nabla_{\perp} \Phi)  \\ 
+     & \left(\hat{\boldsymbol{z}} \times \nabla_{\perp} \frac{\partial\Psi}{\partial t}\right) + \{\Phi, \hat{\boldsymbol{z}} \times \nabla_{\perp} \Psi\}- \{\Psi, \hat{\boldsymbol{z}} \times \nabla_{\perp} \Phi\} + \hat{\boldsymbol{z}} \times \nabla_{\perp}(\boldsymbol{U}\cdot \nabla\Psi) =  v_A \left(\hat{\boldsymbol{z}} \times \nabla_{\perp} \frac{\partial \Phi}{\partial z}\right)\\ 
+ \end{split}
+\end{equation*}
+
+Taking the cross product and perpendicular derivative out of the Poisson brackets can be achieved with less effort by working backwards.
+\begin{equation*}
+ \begin{split} 
+     & \hat{\boldsymbol{z}} \times \nabla_{\perp} \frac{\partial \Psi}{\partial t} + \hat{\boldsymbol{z}} \times \nabla_{\perp} \{\Phi, \Psi\} + \hat{\boldsymbol{z}} \times \nabla_{\perp}(\boldsymbol{U}\cdot \nabla \Psi) =  \hat{\boldsymbol{z}} \times v_A\nabla_{\perp} \frac{\partial \Phi}{\partial z} \\ 
+ \end{split}
+\end{equation*}
+
+Uncrossing \(\hat{\boldsymbol{z}}\) and integrating over the perpendicular direction (to remove \(\nabla_{\perp}\)), we obtain an RMHD equation
+\begin{equation*}
+    \frac{\partial \Psi}{\partial t} +\boldsymbol{U}\cdot \nabla \Psi+ \{\Phi, \Psi\} = v_{\mathrm{A}} \frac{\partial \Phi}{\partial z}
+\end{equation*}
+\begin{equation}
+    \label{eq:RMHD Induction}
+    \frac{\mathrm{d} \Psi}{\mathrm{d} t} = v_{\mathrm{A}} \frac{\partial \Phi}{\partial z}
+\end{equation}
+
+Dividing the momentum equation \eqref{eq:Momentum cons} by \(\rho \approx \rho_{0}\) and ignoring all third order contributions we obtain 
+
+\begin{equation}
+    \frac{\mathrm{d} \boldsymbol{u}}{\mathrm{d} t} = \frac{1}{\rho_0} \left[-\nabla\left( p + \frac{B^2}{8\pi} \right) + \frac{\boldsymbol{B} \cdot \nabla \, \delta \boldsymbol{B}}{4\pi} \right]
+    \label{eq:Momentum sim}
+\end{equation}
+
+We take the perpendicular part of the momentum equation, remove terms third order and higher and simplify by replacing \(\rho_0\) using the sound and Alfv\'en speed.
+\begin{equation*}
+    \frac{\mathrm{d} \delta\boldsymbol{u}_{\perp}}{\mathrm{d} t} = \frac{1}{\rho_0} \left[-\nabla_{\perp} \left( p + \frac{B^2}{8\pi} \right) + \frac{\boldsymbol{B} \cdot \nabla \delta \boldsymbol{B}_{\perp}}{4\pi} \right] 
+    \label{eq:Velocity pert E}
+\end{equation*}
+\begin{equation}
+    \frac{\mathrm{d} \delta\boldsymbol{u}_{\perp}}{\mathrm{d} t}= - \nabla_{\perp} \left(\frac{c_s^2}{\gamma}\,\frac{\delta p}{p_0}+ v_A^2\,\frac{\delta B}{B_0}\right)+ v_A^2\hat{\boldsymbol{b}_{T}} \cdot \nabla \frac{\delta B_{\perp}}{B_0}  
+    \label{eq:Momentum perp}
+\end{equation}
+
+At lowest order, we obtain pressure balance 
+\begin{equation*}
+      \mathcal{O}(\epsilon): \nabla_{\perp} \left(\frac{c_s^2}{\gamma}\,\frac{\delta p}{p_0}+ v_A^2\,\frac{\delta B}{B_0}\right)=0
+\end{equation*}
+
+Thus,
+\begin{equation}
+    \frac{\delta p}{p_0}= - \gamma\frac{v_A^2}{c_s^2}\frac{\delta B}{B_0}
+    \label{eq:Pressure balance}
+\end{equation}
+
+We take the perpendicular curl of the equation \eqref{eq:Momentum perp} to remove the second order contribution from the total pressure, attaining,
+
+\begin{equation*}
+      \mathcal{O}(\epsilon^2): \nabla_{\perp} \times \frac{\mathrm{d} \delta\boldsymbol{u}_{\perp}}{\mathrm{d} t} =  v_A^2 \nabla_{\perp} \times \left( \hat{\boldsymbol{b}_{T}} \cdot \nabla \frac{\delta B_{\perp}}{B_0} \right)  
+\end{equation*}
+
+Substituting the perpendicular perturbations for the stream and flux functions, \eqref{eq:Stream} and \eqref{eq:Flux} respectively, then expanding the triple cross products yields
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t}\nabla_{\perp}^{2}\Phi = v_{A}\,\boldsymbol{b}\cdot\nabla\nabla_{\perp}^{2}\Psi,
+\end{equation*}
+
+This can be rewritten as the following using \eqref{eq:Convective derivative f} and \eqref{eq:B advection f}.
+
+\begin{equation}
+    \label{eq:Vorticity RMHD}
+    \frac{\partial}{\partial t} \nabla_{\perp}^{2} \Phi + \{\Phi, \nabla_{\perp}^{2} \Phi\} + \boldsymbol{U}\cdot\nabla \nabla_{\perp}^{2} \Phi 
+    = v_{A} \frac{\partial}{\partial z} \nabla_{\perp}^{2} \Psi + \{\Psi, \nabla_{\perp}^{2} \Psi\}
+\end{equation}
+
+The RMHD equations for the Alfv\'enic perturbations are summarised below.
+\begin{equation}
+    \begin{split}
+    &\frac{\mathrm{d}}{\mathrm{d}t}\nabla_{\perp}^{2}\Phi = v_{A}\,\boldsymbol{b}\cdot\nabla\nabla_{\perp}^{2}\Psi,\\
+   & \frac{\mathrm{d}\Psi}{\mathrm{d}t} = v_{A}\frac{\partial\Phi}{\partial z}
+    \end{split}
+    \label{eq:RMHD perp}
+\end{equation}
+
+\subsection{Compressive Perturbations}
+Taking the parallel component of the simplified (maybe change word) momentum equation \eqref{eq:Momentum sim}
+\begin{equation}
+    \frac{\mathrm{d} (U+\delta u_{\parallel})}{\mathrm{d} t} = \frac{1}{\rho_0} \left[-\nabla_{\parallel}\left( p + \frac{B^2}{8\pi} \right) + \frac{\boldsymbol{B} \cdot \nabla \, \delta B_{\parallel}}{4\pi} \right]
+    \label{eq:Momentum E U slow}
+\end{equation}
+
+Since pressure balance occurs at lowest order, the first term on the right side is third order and is ignored. Expanding the term \(dU/dt\) and substituting an expression for \(\rho_0\) in terms of the Alfv\'en speed, we obtain
+
+\begin{equation}
+    \frac{\mathrm{d} \delta u_{\parallel}}{\mathrm{d}t}= v_A^2 \hat{\boldsymbol{b}}_{T}  \cdot \nabla \frac{\delta B_{\parallel}}{B_0} -  U\,\delta \boldsymbol{u}_{\perp} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+    %\delta\boldsymbol{u_{\perp}} \cdot \boldsymbol{\nabla_{\perp}}\boldsymbol{U}
+    \label{eq:Momentum Parallel}
+\end{equation}
+
+Projecting the simplified induction equation \eqref{eq:Induction sim} along the parallel direction, we obtain 
+\begin{equation}
+     \frac{\mathrm{d}}{\mathrm{d}t}\frac{\delta B}{B_0}= \hat{\boldsymbol{b}}_{T}  \cdot \nabla (U + \delta u_{\parallel}) - \nabla \cdot \delta\boldsymbol{u}
+\end{equation}
+
+where \(\delta B/B_0 = \delta B_{\parallel}/B_0\). Substituting \eqref{Continuity 2 order} into the last term and expanding \(\hat{\boldsymbol{b}}_{T}  \cdot \nabla U \), we obtain 
+
+\begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d}t}\left(\frac{\delta B_{\parallel}}{B_0} - \frac{\delta \rho}{\rho_0}\right) = \hat{\boldsymbol{b}}_{T}  \cdot \nabla\delta u_{\parallel} + U \frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+    %\frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot\boldsymbol{\nabla_{\perp}}\boldsymbol{U}
+    \label{Induction Parallel almost}
+\end{equation}
+
+To write the above equation only in terms of the velocity and magnetic field, we turn to the energy equation \eqref{eq:Energy cons}. First, dividing by \(s_0\), we then expand the equation in terms of \(p\) and \(\rho\)
+\begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d}t} \frac{\delta s}{s_0}= \frac{\mathrm{d}}{\mathrm{d}t} \left ( \frac{\delta p}{p_0} - \gamma \frac{\delta \rho}{\rho_0} \right)=0
+\end{equation}
+
+Substituting the pressure balance \eqref{eq:Pressure balance}, we find the equation in second order to be
+\begin{equation}
+    \frac{v_A^2}{c_s^2} \frac{\mathrm{d}}{\mathrm{d}t}\frac{\delta B_{\parallel}}{B_0} = -\frac{\mathrm{d}}{\mathrm{d}t} \frac{\delta \rho}{\rho_0} 
+    \label{eq:Energy second order}
+\end{equation}
+
+Finally, we substitute \eqref{eq:Energy second order} into \eqref{Induction Parallel almost}. 
+\begin{equation}
+    \left(1+\frac{v_A^2}{c_s^2}\right)\frac{\mathrm{d}}{\mathrm{d}t} \frac{\delta B_{\parallel}}{B_0}   = \hat{\boldsymbol{b}}_{T}  \cdot \nabla\delta u_{\parallel} + U \frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+    %\frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot\boldsymbol{\nabla_{\perp}}\boldsymbol{U}
+    \label{Induction Parallel}
+\end{equation}
+
+The RMHD equations for the compressive perturbations are summarised below.
+\begin{equation}
+\begin{split}
+    &\frac{\mathrm{d} \delta u_{\parallel}}{\mathrm{d}t}= v_A^2 \hat{\boldsymbol{b}}_{T}  \cdot \nabla \frac{\delta B_{\parallel}}{B_0} -  U\,\delta \boldsymbol{u}_{\perp} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}\\
+    &\left(1+\frac{v_A^2}{c_s^2}\right)\frac{\mathrm{d}}{\mathrm{d}t} \frac{\delta B_{\parallel}}{B_0}   = \hat{\boldsymbol{b}}_{T}  \cdot \nabla\delta u_{\parallel} + U \frac{\delta \boldsymbol{B}_{\perp}}{B_{0}} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+    \label{eq:RMHD parallel}
+\end{split}
+\end{equation}
+
+\subsection{Entropy Mode}
+The entropy equation \eqref{eq:Energy cons} also describes a perturbation, the entropy perturbation. 
+\begin{equation}
+     \frac{\mathrm{d} \delta s}{ \mathrm{d}t}=0
+\end{equation}
+
+The perturbation \(\delta s\) is passively advected by the background flow \(\boldsymbol{U}\) and the perpendicular velocity perturbation \(\delta \boldsymbol{u}_{\perp}\). As a result, no waves are produced from entropy perturbations.
+
+Since \(s\) is dependent on density, the entropy perturbation is decoupled from the Alfv\'enic and slow perturbations. 
+
+
+\subsection{Elsasser Formulation and Energy}
+\subsubsection{Elsasser Fields}
+Due to the underlying symmetry between perpendicular velocity and magnetic field perturbations it is helpful to recast them into Elsasser field \( \delta \boldsymbol{Z}_{\perp}^{\pm}\). 
+\begin{equation}
+    \delta \boldsymbol{Z}_{\perp}^{\pm} = \boldsymbol{u}_{\perp} \mp \frac{\delta \boldsymbol{B}_{\perp}}{\sqrt{4 \pi \rho_{0}}}
+    \label{eq:Elsasser}
+\end{equation}
+The upper sign in the equation above represents outward propagating Alfv\'enic perturbations and the lower sign represents Alfv\'enic perturbations traveling inwards. 
+
+
+The Elsasser fields can be represented as the following using the potential formulation for the perpendicular perturbations, \eqref{eq:Stream} and \eqref{eq:Flux}
+\begin{equation*}
+    \delta \boldsymbol{Z}_{\perp}^{\pm}
+    = \hat{\boldsymbol{z}} \times \nabla_{\perp} \zeta^{\pm},
+\end{equation*}
+
+where we have defined the Elsasser potentials as 
+\begin{equation*}
+    \zeta^{\pm} = \Phi \mp \Psi.
+\end{equation*}
+
+The `vorticities' of the Elsasser fields, which physically represent fluid vorticity (stream) and electrical currents (flux), is defined as
+\begin{equation}
+    \label{eq:Vorticity}
+    \omega^{\pm} = \hat{z} \cdot \left( \nabla_{\perp} \times \delta \boldsymbol{Z}^{\pm}_{\perp} \right) = \nabla_{\perp}^{2} \zeta^{\pm}.
+\end{equation}
+
+We can rewrite the Alfv\'enic RMHD equations \eqref{eq:RMHD perp} into a evolution equation for the `vorticities'. Firstly, we expand the equation using \eqref{eq:Convective derivative f}, then multiply the RMHD equation \eqref{eq:RMHD Induction} by \(\nabla^2_{\perp}\).
+
+\begin{equation*}
+\begin{split}
+    & \frac{\partial}{\partial t} (\nabla^2_{\perp}\Psi)+ \nabla^2_{\perp}\{\Phi, \Psi\} + \boldsymbol{U}\cdot \nabla (\nabla^2_{\perp}\Psi) = v_{\mathrm{A}} \frac{\partial }{\partial z} (\nabla^2_{\perp}\Phi) \\
+    &\frac{\partial}{\partial t} (\nabla^2_{\perp}\Psi)+ \{\nabla^2_{\perp}\Phi, \Psi\} + \{\Phi, \nabla^2_{\perp}\Psi\}+ \boldsymbol{U}\cdot \nabla (\nabla^2_{\perp}\Psi) = v_{\mathrm{A}} \frac{\partial }{\partial z} (\nabla^2_{\perp}\Phi)\\
+\end{split}
+\end{equation*}
+
+Subtracting (adding) the above from (to) the RMHD equation \eqref{eq:Vorticity RMHD}, results in
+\begin{equation*}
+\begin{split}
+    &\frac{\partial \omega^{\pm}}{\partial t}  \pm v_{A} \frac{\partial\omega^{\pm}}{\partial z} +\{\Phi, \nabla_{\perp}^{2} \Phi\} - \{\Psi, \nabla_{\perp}^{2} \Psi\} \mp \{\nabla^2_{\perp}\Phi, \Psi\} \mp \{\Phi, \nabla^2_{\perp}\Psi\}+ \boldsymbol{U}\cdot\nabla \omega^{\pm} = 0\\
+     &\frac{\partial \omega^{\pm}}{\partial t}  \pm v_{A} \frac{\partial\omega^{\pm}}{\partial z} +\{\Phi, \omega^{\pm}\} \pm \{\Psi, \omega^{\pm}\}  + \boldsymbol{U}\cdot\nabla \omega^{\pm} = 0\\
+     &\frac{\partial \omega^{\pm}}{\partial t}  + (U\pm v_{A})\frac{\partial\omega^{\pm}}{\partial z} + \{\zeta^{\mp}, \omega^{\pm}\} = 0\\
+\end{split}
+\end{equation*}
+% Could probably get rid of a couple of steps
+
+\begin{equation}
+    \frac{\partial \omega^{\pm}}{\partial t} +(U\pm v_{A})\frac{\partial \omega^{\pm}}{\partial z} + \{\zeta^{\mp}, \omega^{\pm}\} = \{\partial_j \zeta^{\pm}, \partial_j \zeta^{\mp}\} 
+    \label{eq:RMHD Elsasser}
+\end{equation}
+\textcolor{red}{Spiel later about what RHS represents}
+
+Counterpropagating Alfv\'enic perturbations, propagating with speed \(U\pm v_A\) can only interact nonlinearly with each other (Alf\'ven waves traveling in one direction have the same speed). A perturbation composed of a single Elsasser field is a nonlinear solution to the equation. For example, if \(\delta\boldsymbol{Z}^-_{\perp}=0\), then the evolution equation becomes
+\begin{equation*}
+    \frac{\partial \omega^{+}}{\partial t} +(U\pm v_{A})\frac{\partial \omega^{+}}{\partial z} =0 
+\end{equation*}
+and \(\omega^{+}\) and therefore \(\delta\boldsymbol{Z}^+_{\perp}\)is a solution.
+
+There is an Elsasser-like formulation for the slow waves as well, where again the upper sign represents outward propagating waves and the lower sign, inwards.
+\begin{equation}
+    \delta Z_{\parallel}^{\pm} = u_{\parallel} \mp \frac{\delta B}{\sqrt{4\pi \rho_0}} \sqrt{1 + \frac{v_{\mathrm{A}}^{2}}{c_{\mathrm{s}}^{2}}}
+    \label{eq:Elsasser-like}
+\end{equation}
+
+First we convert the parallel magnetic field perturbation in the RMHD equations \eqref{eq:RMHD parallel}, into the form required for Elsasser-like formulation.
+\begin{equation*}
+     \frac{\mathrm{d} \delta u_{\parallel}}{\mathrm{d} t}= \frac{v_Ac_s}{\sqrt{v_A^2 +c_s^2}}\hat{\boldsymbol{b}}_{T}  \cdot \nabla \frac{\delta B_{\parallel}}{\sqrt{4 \pi\rho_0}}\sqrt{1+\frac{v_A^2}{c_s^2}} -  U\,\delta \boldsymbol{u}_{\perp} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+\end{equation*}
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}t}  \frac{\delta B_{\parallel}}{\sqrt{4 \pi\rho_0}}\sqrt{1+\frac{v_A^2}{c_s^2}} = \frac{v_Ac_s}{\sqrt{v_A^2 +c_s^2}}\hat{\boldsymbol{b}}_{T}  \cdot \nabla \frac{\delta u_{\parallel}}{\sqrt{4 \pi\rho_0}}\sqrt{1+\frac{v_A^2}{c_s^2}} + U \frac{c_s}{\sqrt{v_A^2 +c_s^2}}\frac{\delta \boldsymbol{B}_{\perp}}{\sqrt{4 \pi\rho_0}} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+\end{equation*}
+
+Subtracting (adding) the first equation above from (to) the second equation above and then expanding using \eqref{eq:Convective derivative f} and \eqref{eq:B advection f} , we obtain 
+\begin{equation*}
+    \begin{split}
+    &\frac{\mathrm{d} \delta Z_{\parallel}^{\pm}}{\mathrm{d} t} \pm \frac{c_{s} v_{A}}{\sqrt{c_{s}^{2} + v_{A}^{2}}} \hat{\boldsymbol{b}}_{T}  \cdot \nabla \delta Z_{\parallel}^{\pm} = -U \boldsymbol{\mathcal{K}^{\perp}_{U}} \cdot\left( \delta \boldsymbol{u}_{\perp} \pm \frac{c_s}{\sqrt{v_A^2 +c_s^2}}\frac{\delta \boldsymbol{B}_{\perp}}{\sqrt{4 \pi\rho_0}}\right) \\
+    \end{split}
+\end{equation*}
+\begin{equation*}
+    \begin{split}
+    \frac{\partial \delta Z_{\parallel}^{\pm}}{\partial t}
+    & +\left(U\pm \frac{c_{s} v_{A}}{\sqrt{c_{s}^{2} + v_{A}^{2}}} \right)\frac{\partial \delta Z_{\parallel}^{\pm}}{\partial z} + \{\Phi,  \delta Z_{\parallel}^{\pm}\} \pm \frac{c_{s}}{\sqrt{c_{s}^{2} + v_{A}^{2}}}\{\Psi,  \delta Z_{\parallel}^{\pm}\}\\
+    &= -U \boldsymbol{\mathcal{K}^{\perp}_{U}} \cdot\left( \delta \boldsymbol{u}_{\perp} \pm \frac{c_s}{\sqrt{v_A^2 +c_s^2}}\frac{\delta \boldsymbol{B}_{\perp}}{\sqrt{4 \pi\rho_0}}\right)
+    \end{split}
+\end{equation*}
+Utilising the fact that \(2\Phi = \zeta^{+} + \zeta^{-}\) and \(2\Psi = \zeta^{+} - \zeta^{-}\), the equation becomes 
+
+\begin{equation}
+    \label{eq:RMHD Elsasser-like}
+    \begin{split}
+    &\frac{\partial \delta Z_{\parallel}^{\pm}}{\partial t} +\left(U\pm \frac{c_{s} v_{A}}{\sqrt{c_{s}^{2} + v_{A}^{2}}} \right) \frac{\partial \delta Z_{\parallel}^{\pm}}{\partial z} \\
+    &= -\frac{1}{2} \left[ \left( 1 \pm \frac{1}{\alpha} \right) [\{ \zeta^{+}, \delta Z_{\parallel}^{\pm} \}+U  \boldsymbol{\mathcal{K}^{\perp}_{U}} \cdot \delta \boldsymbol{Z^{+}_{\perp}}] + \left( 1 \mp \frac{1}{\alpha} \right) [\{ \zeta^{-}, \delta Z_{\parallel}^{\pm} \}+ U  \boldsymbol{\mathcal{K}^{\perp}_{U}} \cdot \delta \boldsymbol{Z^{-}_{\perp}}] \right],
+    \end{split}
+\end{equation}
+where \(\alpha= \sqrt{1 + v_{A}^{2} / c_{s}^{2}}\).
+
+The evolution equation represents slow waves traveling at \(U\pm (c_{s} v_{A})/\sqrt{c_{s}^{2} + v_{A}^{2}}\), the background velocity \(\pm\) slow wave speed. When the Alfv\'en speed is much slower than the sound speed, \(v_A \ll c_s\) (subsonic), slow waves only interact with counterpropagating Alfv\'en perturbations. However, when \(v_A \sim c_s\) or higher, slow waves can interact with copropagating Alfv\'en waves since these Alfv\'en waves can pass the slow waves traveling in the same direction. Slow waves are also driven only by counterprogagating Alfv\'en waves when \(v_A \ll c_s\) and can be driven by both counter and copropagating Alfv\'en waves in the presence of the background velocity shear. \textcolor{red}{Causality-because slow waves can only interact with counterpropagating Alfv\'en waves, these waves can be the only ones that drive the slow waves (use energy from the velocity shear to drive them)}
+
+
+In the next section we determine whether energies of \(\delta \boldsymbol{Z}_{\perp}^{\pm}\) and \(\delta Z_{\parallel}^{\pm}\) are conserved or not.
+
+\subsubsection{Alfv\'en Wave Energy}
+The energy of the Alfv\'en waves, stored in the Elsasser fields \(\delta\boldsymbol{Z}_{\perp}^{\pm}\), is given by
+\begin{equation*}
+    E_{\mathrm{Alf}} = \frac{1}{2} \int dV\, \rho_{0} \left| \delta\boldsymbol{Z}_{\perp}^{\pm} \right|^{2}.
+\end{equation*}
+%1/2 rho is multiplied to velocity squared and required to get energy density in the integral, which integrates over the entire volume for energy  
+
+Rewriting in terms of the perpendicular velocity and magnetic field, the Alfv\'en energy becomes
+\begin{equation*}
+\begin{split}
+    E_{\mathrm{Alf}} &= \frac{1}{2} \int dV\, \rho_{0} \frac{\left| \delta\boldsymbol{Z}_{\perp}^{+} \right|^{2} + \left| \delta\boldsymbol{Z}_{\perp}^{-} \right|^{2}}{2}\\
+    &=\int dV\, \frac{\rho_{0}}{2}\delta \boldsymbol{u}_{\perp}^2\, + \frac{\delta \boldsymbol{B}_{\perp}^2}{8\pi}.
+\end{split}
+\end{equation*}
+The Alfv\'enic energy has kinetic and magnetic energy contributions.
+
+By taking the time derivative of the Alfv\'en wave energy, we can see how the energy of the waves evolves. 
+\begin{equation*}
+    \frac{\partial E_{\mathrm{Alf}}}{\partial t} = \int dV\, \frac{\partial}{\partial t}\left( \frac{\rho_{0}}{2}\delta \boldsymbol{u}_{\perp}^2\right)\, + \frac{\partial}{\partial t}\left( \frac{\delta \boldsymbol{B}_{\perp}^2}{8\pi}\right).
+\end{equation*}
+
+If we convert the terms in the integral into a total divergence, we can remove them from the equation since there are no sources or sinks of energy within a fluid element of plasma.
+
+We first evaluate the time derivative of the kinetic energy term in the integral by substituting the equation \eqref{eq:Velocity pert E}.
+
+\begin{equation}
+\begin{split}
+    \frac{\partial}{\partial t} \frac{\rho_{0}}{2}\delta \boldsymbol{u}_{\perp}^2
+    &= \delta \boldsymbol{u}_{\perp} \cdot \left( \rho_{0} \frac{\partial}{\partial t} \delta \boldsymbol{u}_{\perp} \right)\\
+    &=-\rho_{0} \delta \boldsymbol{u}_{\perp} \cdot (\tilde{\boldsymbol{u}}\cdot \nabla\delta \boldsymbol{u}_{\perp}) -\delta \boldsymbol{u}_{\perp} \cdot \nabla\left( p +\frac{B^2}{8\pi}\right)+  \delta \boldsymbol{u}_{\perp} \cdot \frac{\boldsymbol{B}\cdot \nabla \delta \boldsymbol{B}_{\perp}}{4\pi}
+    \label{eq:Alfven E U Long}
+\end{split}
+\end{equation}
+We have defined \(\tilde{\boldsymbol{u}}= \boldsymbol{U} +\delta \boldsymbol{u}_{\perp} \) in the above.
+
+We convert all the terms into divergences, beginning with the first term
+\begin{equation*}
+\begin{split}
+    -\rho_{0} \delta \boldsymbol{u}_{\perp} \cdot (\tilde{\boldsymbol{u}}\cdot \nabla\delta \boldsymbol{u}_{\perp})
+    &= -\frac{\rho_{0}}{2}  \tilde{\boldsymbol{u}}\cdot \nabla|\delta \boldsymbol{u}_{\perp}|^2\\
+    &=- \nabla \cdot \left(\frac{\rho_{0}}{2}\delta u_{\perp}^2  \tilde{\boldsymbol{u}} \right)
+\end{split}
+\end{equation*}
+where we have used the fact that \(\nabla\cdot \tilde{\boldsymbol{u}}=0\) (to first order).
+%see if want to add absolute symbols or convert or unbold it 
+
+The second term in \eqref{eq:Alfven E U Long} becomes 
+\begin{equation*}
+    -\nabla \cdot \left[\left( p +\frac{B^2}{8\pi}\right) \cdot \delta \boldsymbol{u}_{\perp}\right]
+\end{equation*}
+
+The result for the final term also contains an extra non divergence term.
+\begin{equation*}
+\begin{split}
+    \frac{1}{4\pi}\delta \boldsymbol{u}_{\perp} \cdot \boldsymbol{B}\cdot \nabla \delta \boldsymbol{B}_{\perp}
+    &=\frac{1}{4\pi}\delta \boldsymbol{u}_{\perp} \cdot \nabla (\delta \boldsymbol{B}_{\perp} \boldsymbol{B})\\
+    &=\nabla \cdot \left(\frac{1}{4\pi}\delta \boldsymbol{u}_{\perp} \cdot\delta \boldsymbol{B}_{\perp} \boldsymbol{B} \right) - \frac{\delta \boldsymbol{B}_{\perp} }{4\pi} \cdot (\boldsymbol{B}\cdot \nabla \delta \boldsymbol{u}_{\perp})
+\end{split}
+\end{equation*}
+
+For the time derivative of the magnetic energy, we substitute the equation \eqref{eq:Induction eqn perp}.
+\begin{equation}
+    \begin{split}
+        \frac{\partial}{\partial t}\left( \frac{\delta \boldsymbol{B}_{\perp}^2}{8\pi}\right)
+        &= \frac{\delta \boldsymbol{B}_{\perp}}{4\pi} \cdot \frac{\partial \delta \boldsymbol{B}_{\perp}}{\partial t}\\
+        &= -\frac{1}{4\pi} \delta \boldsymbol{B}_{\perp}\cdot ( \tilde{\boldsymbol{u}} \cdot \nabla \delta \boldsymbol{B}_{\perp}) + \frac{1}{4\pi} \delta \boldsymbol{B}_{\perp}\cdot (\boldsymbol{B} \cdot \nabla \delta \boldsymbol{u}_{\perp})
+    \end{split}
+\end{equation}
+We can convert the first term in the equation above into a divergence.
+\begin{equation*}
+    \begin{split}
+        -\frac{1}{4\pi} \delta \boldsymbol{B}_{\perp}\cdot ( \tilde{\boldsymbol{u}} \cdot \nabla \delta \boldsymbol{B}_{\perp})
+        &=-\tilde{\boldsymbol{u}} \cdot \nabla \frac{\delta B_{\perp}^2}{8\pi}\\
+        &=-\nabla \cdot \left(\frac{\delta B_{\perp}^2}{8\pi}  \tilde{\boldsymbol{u}} \right)
+    \end{split}
+\end{equation*}
+
+The the kinetic and magnetic energy terms are substituted into the integral and the expression is simplified.
+
+\begin{equation*}
+ \begin{split}
+    \frac{\partial E_{\mathrm{Alf}}}{\partial t} = \int \left[- \nabla \cdot \left(\frac{\rho_{0}}{2}\delta u_{\perp}^2  \tilde{\boldsymbol{u}} + \left( p +\frac{B^2}{8\pi}\right) \cdot \delta \boldsymbol{u}_{\perp} +\frac{1}{4\pi}\delta \boldsymbol{u}_{\perp} \cdot(\delta \boldsymbol{B}_{\perp} \boldsymbol{B}) - \frac{\delta B_{\perp}^2}{8\pi}  \tilde{\boldsymbol{u}}\right)\right] dV
+%   &+ \frac{1}{4\pi} \delta \boldsymbol{B}_{\perp}\cdot (\boldsymbol{B} \cdot \nabla \delta \boldsymbol{u}_{\perp}) - \frac{1}{4\pi} \delta \boldsymbol{B}_{\perp}\cdot (\boldsymbol{B} \cdot \nabla \delta \boldsymbol{u}_{\perp})
+ \end{split}
+\end{equation*}
+Because the Alfv\'enic energy can only be transferred through a fluid element and cannot be created or destroyed, the net Alvenic energy flux in the fluid element is zero and the integral is zero.
+
+Hence, the energy of the Alfv\'en waves is conserved since the time derivative of the Alfv\'en energy is zero.
+\begin{equation}
+    \label{eq:Alfven E cons}
+    \frac{\mathrm{d}}{\mathrm{d} t} \int \mathrm{d}\boldsymbol{r}^3 |\delta \boldsymbol{Z}_{\perp}^{\pm}|^{2} = 0
+\end{equation}
+
+\subsubsection{Slow Wave Energy}
+The energy of slow waves is given by the expression below.
+\begin{equation*}
+    E_{\mathrm{slow}} = \frac{1}{2} \int dV\, \rho_{0} \left| Z_{\parallel}^{\pm} \right|^{2}.
+\end{equation*}
+
+Using the Elsasser-like formulation for slow waves \eqref{eq:Elsasser-like}, the energy becomes
+\begin{equation*}
+\begin{split}
+    E_{\mathrm{Slow}} &= \frac{1}{2} \int dV\, \rho_{0} \frac{\left| \delta Z_{\parallel}^{+} \right|^{2} + \left| \delta Z_{\parallel}^{-} \right|^{2}}{2}\\
+    &=\frac{1}{2} \int dV\, \frac{\rho_{0}}{2}\delta u_{\parallel}^2\, + \frac{\delta B_{\parallel}^2}{8\pi} \left(1+ \frac{v_A^2}{c_s^2}\right).
+\end{split}
+\end{equation*}
+
+Apart from the kinetic and magnetic energy contributions to the slow wave energy, the the wave speed scaling term originates from the internal energy of the fluid.
+
+Once again, we wish to determine the time evolution of the slow mode energy.
+\begin{equation*}
+    \frac{\partial E_{\mathrm{Slow}}}{\partial t} = \int dV\, \frac{\partial}{\partial t}\left( \frac{\rho_{0}}{2}\delta u_{\parallel}^2\right)\, + \frac{\partial}{\partial t}\frac{\delta B_{\parallel}^2}{8\pi} \left(1+ \frac{v_A^2}{c_s^2}\right).
+\end{equation*}
+
+Expanding the kinetic energy term using the equation \eqref{eq:Momentum E U slow}, we obtain 
+\begin{equation*}
+\begin{split}
+    \frac{\partial}{\partial t}\left( \frac{\rho_{0}}{2}\delta u_{\parallel}^2\right)
+    &= \delta u_{\parallel}  \rho_{0} \frac{\partial}{\partial t} \delta u_{\parallel} \\
+    &=-\rho_{0} \delta u_{\parallel}  \tilde{\boldsymbol{u}}\cdot \nabla\delta u_{\parallel} +  \delta u_{\parallel}  \frac{\boldsymbol{B}\cdot \nabla \delta \boldsymbol{B}_{\perp}}{4\pi} -\rho_0 U\delta u_{\parallel}\,\delta \boldsymbol{u}_{\perp} \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+\end{split}
+\end{equation*}
+
+We can convert the first two terms into divergences to get
+
+\begin{equation*}
+\begin{split}
+    -\rho_{0} \delta u_{\parallel}  \tilde{\boldsymbol{u}}\cdot \nabla\delta u_{\parallel}
+    &= -\frac{\rho_{0}}{2}  \tilde{\boldsymbol{u}}\cdot \nabla\delta u_{\parallel}^2\\
+    &=- \nabla \cdot \left(\frac{\rho_{0}}{2}\delta u_{\parallel}^2  \tilde{\boldsymbol{u}} \right)
+\end{split}
+\end{equation*}
+
+and 
+\begin{equation*}
+\begin{split}
+    \frac{1}{4\pi}\delta u_{\parallel} \boldsymbol{B}\cdot \nabla \delta B_{\parallel}
+    &=\frac{1}{4\pi}\delta u_{\parallel} \nabla (\delta B_{\parallel} \boldsymbol{B})\\
+    &=\nabla \cdot \left(\frac{1}{4\pi}\delta u_{\parallel}\delta B_{\parallel} \boldsymbol{B} \right) - \frac{\delta B_{\parallel}}{4\pi}  (\boldsymbol{B}\cdot \nabla \delta u_{\parallel})
+\end{split}
+\end{equation*}
+
+We can substitute the equation \eqref{Induction Parallel} into the last term in the integral.
+\begin{equation*}
+    \begin{split}
+        \alpha\frac{\partial}{\partial t}\frac{\delta B_{\parallel}^2}{8\pi} 
+        &= \alpha \frac{\delta B_{\parallel}}{4\pi}  \frac{\partial \delta B_{\parallel}}{\partial t} \\
+        &= -\frac{\alpha}{4\pi} \delta B_{\parallel}( \tilde{\boldsymbol{u}} \cdot \nabla \delta B_{\parallel}) + \frac{\delta B_{\parallel}}{4\pi}  (\boldsymbol{B} \cdot \nabla \delta u_{\parallel}) + \frac{1}{4\pi} U\delta B_{\parallel} \delta \boldsymbol{B}_{\perp}\cdot \boldsymbol{\mathcal{K}^{\perp}_{U}}
+    \end{split}
+\end{equation*}
+The constant is defined as \(\alpha = \left(1+ v_A^2/c_s^2\right)\). 
+
+The first term of this expression becomes
+\begin{equation*}
+    \begin{split}
+        -\frac{\alpha}{4\pi} \delta B_{\parallel}( \tilde{\boldsymbol{u}} \cdot \nabla \delta B_{\parallel})
+        &=-\alpha\tilde{\boldsymbol{u}} \cdot \nabla \frac{\delta B_{\parallel}^2}{8\pi}\\
+        &=-\nabla \cdot \left(\alpha \frac{\delta B_{\parallel}^2}{8\pi}  \tilde{\boldsymbol{u}} \right)
+    \end{split}
+\end{equation*}
+whereas the second term cancels with the corresponding term from the kinetic energy.
+
+Assembling all terms in the integral, we get the expression 
+\begin{equation*}
+   \begin{split}
+        \frac{\partial E_{\mathrm{Slow}}}{\partial t} = \int \left[ - \nabla\cdot\left( \frac{\rho_{0}}{2}\delta u_{\parallel}^2  \tilde{\boldsymbol{u}} -\frac{1}{4\pi}\delta u_{\parallel}\delta B_{\parallel} \boldsymbol{B} +\alpha \frac{\delta B_{\parallel}^2}{8\pi}  \tilde{\boldsymbol{u}}\right) -\rho_0 U(\delta u_{\parallel}\,\delta \boldsymbol{u}_{\perp}- \frac{\delta B_{\parallel} \delta \boldsymbol{B}_{\perp}}{4\pi \rho_0} ) \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}} \right] dV
+   \end{split}
+\end{equation*}
+There are no sources or sinks of slow wave energy in a fluid element, therefore the divergence in the integral goes to zero.
+
+Thus, the slow wave energy is not conserved and evolves according to the equation.
+\begin{equation}
+   \begin{split}
+        \frac{\partial E_{\mathrm{Slow}}}{\partial t} = \int \left[
+        -\rho_0 U\left(\delta u_{\parallel}\,\delta \boldsymbol{u}_{\perp}- \frac{\delta B_{\parallel} \delta \boldsymbol{B}_{\perp}}{4\pi \rho_0} \right) \cdot \boldsymbol{\mathcal{K}^{\perp}_{U}} \right] dV\, 
+   \end{split}
+\end{equation}
+The equation physically represents the kinetic energy exchange between the background velocity shear and the slow waves. This make intuitive sense since  the compressive perturbation equations \eqref{Induction Parallel} and \eqref{eq:Momentum Parallel} represent the process of Alfv\'en waves using the energy from the velocity shear to drive compressive perturbations
+
+% Increasing compressive perturbations decreases the energy of slow waves so increases background shear? Doesn't seem right
+
+\subsubsection{Entropy Mode Energy}
+Since the entropy mode is decoupled from the Alfv\'en and slow modes, the energy of this mode is individually conserved.
+\begin{equation*}
+    E_{s} = \frac{1}{2} \int dV \frac{\delta s^{2}}{s_{0}^{2}}
+\end{equation*}
+
+Proof: Using the time evolution of entropy (and there is a contribution from internal energy)
+\begin{equation*}
+    \begin{split}
+        \frac{\partial  E_{s} }{\partial t}
+        &= \int dV \frac{1}{2} \frac{\partial} {\partial t}\frac{\delta s^{2}}{s_{0}^{2}}\\
+        &=\int dV \frac{\delta s}{s_0^2}\frac{\partial \delta s}{\partial t} \\
+        &=\int dV -\frac{\delta s}{s_0^2} \tilde{\boldsymbol{u}}\cdot \nabla \delta s \\
+        &=\int dV \left[-\nabla \cdot \left( \frac{\delta s^2}{s_0^2} \tilde{\boldsymbol{u}} \right)\right]\\
+    \end{split}
+\end{equation*}
+
+The divergence goes to zero since there are no sources or sinks for the entropy mode energy in a fluid element.
+
+Thus, 
+\begin{equation}
+    \label{eq:Entropy E cons}
+    \frac{\mathrm{d}}{\mathrm{d} t} \int \mathrm{d}\boldsymbol{r}^3 |\delta s|^{2} = 0
+\end{equation}
+
+
 \chapter{Source Code for thesis.dvi}
 
 You do not need to include the source code for your thesis (this is just an example).
@@ -48,8 +1106,8 @@ can be useful -- talk to your supervisor.
 \subsection{conclusion.tex}
 \listinginput[10]{1}{conclusion.tex}
 
-\subsection{appendices.tex}
-\listinginput[10]{1}{appendices.tex}
+
+
 
 %%
 %% \listinginput[x]{y}{filename} gives a listing of <filename>,
